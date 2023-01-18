@@ -39,4 +39,29 @@ class ApiController extends Controller
         $customer->save();
         return response()->json(['id' => $customer->id, 'name' => $customer->name], 200);
     }
+
+    public function getCustomer()
+    {
+    }
+    public function updateCustomer()
+    {
+    }
+    public function deleteCustomer()
+    {
+    }
+    public function getReports()
+    {
+    }
+    public function storeReport()
+    {
+    }
+    public function getReport()
+    {
+    }
+    public function updateReport()
+    {
+    }
+    public function deleteReport()
+    {
+    }
 }

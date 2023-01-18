@@ -21,27 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('customers', [ApiController::class, 'getCustomers']);
 Route::post('customers', [ApiController::class, 'storeCustomer']);
-Route::get('customers/{customer_id}', function () {
-    return;
-});
-Route::put('customers/{customer_id}', function () {
-    return;
-});
-Route::delete('customers/{customer_id}', function () {
-    return;
-});
-Route::get('reports', function () {
-    return;
-});
-Route::post('reports', function () {
-    return;
-});
-Route::get('reports/{report_id}', function () {
-    return;
-});
-Route::put('reports/{report_id}', function () {
-    return;
-});
-Route::delete('reports/{report_id}', function () {
-    return;
-});
+Route::get('customers/{customer_id}', [ApiController::class, 'getCustomer']);
+Route::put('customers/{customer_id}', [ApiController::class, 'updateCustomer']);
+Route::delete('customers/{customer_id}', [ApiController::class, 'deleteCustomer']);
+Route::get('reports', [ApiController::class, 'getReports']);
+Route::post('reports', [ApiController::class, 'storeReport']);
+Route::get('reports/{report_id}', [ApiController::class, 'getReport']);
+Route::put('reports/{report_id}', [ApiController::class, 'updateReport']);
+Route::delete('reports/{report_id}', [ApiController::class, 'deleteReport']);
