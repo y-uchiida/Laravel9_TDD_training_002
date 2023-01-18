@@ -40,6 +40,15 @@ class ReportTest extends TestCase
     }
 
     /** @test */
+    public function api_customersが返すjsonが仕様通りのプロパティを持っている()
+    {
+        $response = $this->get('api/customers');
+        $expectedKeys = ['id', 'name'];
+        $customer = $response->json()[0];
+        $this->assertSame($expectedKeys, array_keys($customer));
+    }
+
+    /** @test */
     public function api_customersにPOSTメソッドでアクセスできる()
     {
         $response = $this->post('api/customers');
