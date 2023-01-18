@@ -2,6 +2,7 @@
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +28,19 @@ Route::get('customers', function () {
     $customers = Customer::query()->select(['id', 'name'])->get();
     return response()->json($customers);
 });
-Route::post('customers', function () {
+
+/**
+ * (仮) リクエストされたデータでcustomers にレコードを追加する
+ * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
+ */
+Route::post('customers', function (Request $request) {
+    $inputName = $request->json('name');
+    if (!$inputName) {
+        return response()->make('', Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+    $customer = new Customer();
+    $customer->name = $inputName;
+    $customer->save();
     return;
 });
 Route::get('customers/{customer_id}', function () {
