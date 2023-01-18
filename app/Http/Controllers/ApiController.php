@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,9 +17,9 @@ class ApiController extends Controller
      *
      * @return JsonResponse
      */
-    public function getCustomers(): JsonResponse
+    public function getCustomers(CustomerService $customerService): JsonResponse
     {
-        $customers = Customer::query()->select(['id', 'name'])->get();
+        $customers = $customerService->getCustomers();
         return response()->json($customers);
     }
 
