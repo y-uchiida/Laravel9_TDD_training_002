@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * (仮) Customer の一覧を返す
+ * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
+ */
 Route::get('customers', function () {
-    return response()->json();
+    $customers = Customer::query()->select(['id', 'name'])->get();
+    return response()->json($customers);
 });
 Route::post('customers', function () {
     return;
