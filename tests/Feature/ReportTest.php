@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -46,6 +47,15 @@ class ReportTest extends TestCase
         $expectedKeys = ['id', 'name'];
         $customer = $response->json()[0];
         $this->assertSame($expectedKeys, array_keys($customer));
+    }
+
+    /** @test */
+    public function api_customersが返すjsonに含まれるデータの件数がデータベースに登録されているデータの件数と一致する()
+    {
+        $record_count = Customer::count();
+        $response = $this->get('api/customers');
+        $response_count = count($response->json());
+        $this->assertSame($record_count, $response_count);
     }
 
     /** @test */
