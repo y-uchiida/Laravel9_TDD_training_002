@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('customers', function () {
-    return;
+    return response()->json();
 });
 Route::post('customers', function () {
     return;
