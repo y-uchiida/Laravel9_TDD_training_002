@@ -8,15 +8,13 @@ use Tests\TestCase;
 
 class ReportTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    /** @test */
+    public function api_customersにGETメソッドでアクセスできる()
     {
-        $response = $this->get('/');
+        // テスト対象の処理を実行
+        $response = $this->get('api/customers');
 
-        $response->assertStatus(200);
+        // 検証
+        $response->assertOk();
     }
 }
