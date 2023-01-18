@@ -61,7 +61,8 @@ class ReportTest extends TestCase
     /** @test */
     public function api_customersにPOSTメソッドでアクセスできる()
     {
-        $response = $this->post('api/customers');
+        $data = ['name' => 'customer name'];
+        $response = $this->postJson('api/customers', $data);
         $response->assertOk();
     }
 
