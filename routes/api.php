@@ -21,3 +21,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('customers', function () {
     return;
 });
+Route::post('customers', function () {
+    return;
+});
+Route::get('customers/{customer_id}', function () {
+    return;
+});
+Route::put('customers/{customer_id}', function () {
+    return;
+});
+Route::delete('customers/{customer_id}', function () {
+    return;
+});
+Route::get('reports', function () {
+    return;
+});
+Route::post('reports', function () {
+    return;
+});
+Route::get('reports/{report_id}', function () {
+    return;
+});
+Route::put('reports/{report_id}', function () {
+    return;
+});
+Route::delete('reports/{report_id}', function () {
+    return;
+});
