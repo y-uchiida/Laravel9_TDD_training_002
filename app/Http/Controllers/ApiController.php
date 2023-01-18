@@ -29,14 +29,12 @@ class ApiController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function storeCustomer(Request $request): JsonResponse
+    public function storeCustomer(Request $request, CustomerService $customerService): JsonResponse
     {
         $this->validate($request, [
             'name' => ['required', 'min:1'],
         ]);
-        $customer = new Customer();
-        $customer->name = $request->json('name');
-        $customer->save();
+        $customer = $customerService->addCustomer($request->json('name'));
         return response()->json(['id' => $customer->id, 'name' => $customer->name], 200);
     }
 
