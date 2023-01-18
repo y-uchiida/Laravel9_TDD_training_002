@@ -30,12 +30,11 @@ class ApiController extends Controller
      */
     public function storeCustomer(Request $request): JsonResponse
     {
-        $inputName = $request->json('name');
-        if (!$inputName) {
-            return response()->json([], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $this->validate($request, [
+            'name' => ['required', 'min:1'],
+        ]);
         $customer = new Customer();
-        $customer->name = $inputName;
+        $customer->name = $request->json('name');
         $customer->save();
         return response()->json(['id' => $customer->id, 'name' => $customer->name], 200);
     }
