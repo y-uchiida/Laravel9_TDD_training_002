@@ -66,6 +66,15 @@ class ReportTest extends TestCase
     }
 
     /** @test */
+    public function api_customersへのPOSTリクエストで顧客データが追加できる()
+    {
+        $customerName = 'new customer name';
+        $data = ['name' => $customerName];
+        $this->postJson('api/customers', $data);
+        $this->assertDatabaseHas('customers', $data);
+    }
+
+    /** @test */
     public function api_customers_customer_idにGETメソッドでアクセスできる()
     {
         $response = $this->get('api/customers/1');
