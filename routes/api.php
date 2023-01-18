@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\Customer;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,50 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/**
- * (仮) Customer の一覧を返す
- * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
- */
-Route::get('customers', function () {
-    $customers = Customer::query()->select(['id', 'name'])->get();
-    return response()->json($customers);
-});
-
-/**
- * (仮) リクエストされたデータでcustomers にレコードを追加する
- * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
- */
-Route::post('customers', function (Request $request) {
-    $inputName = $request->json('name');
-    if (!$inputName) {
-        return response()->make('', Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-    $customer = new Customer();
-    $customer->name = $inputName;
-    $customer->save();
-    return;
-});
-Route::get('customers/{customer_id}', function () {
-    return;
-});
-Route::put('customers/{customer_id}', function () {
-    return;
-});
-Route::delete('customers/{customer_id}', function () {
-    return;
-});
-Route::get('reports', function () {
-    return;
-});
-Route::post('reports', function () {
-    return;
-});
-Route::get('reports/{report_id}', function () {
-    return;
-});
-Route::put('reports/{report_id}', function () {
-    return;
-});
-Route::delete('reports/{report_id}', function () {
-    return;
-});
+Route::get('customers', [ApiController::class, 'getCustomers']);
+Route::post('customers', [ApiController::class, 'storeCustomer']);
+Route::get('customers/{customer_id}', [ApiController::class, 'getCustomer']);
+Route::put('customers/{customer_id}', [ApiController::class, 'updateCustomer']);
+Route::delete('customers/{customer_id}', [ApiController::class, 'deleteCustomer']);
+Route::get('reports', [ApiController::class, 'getReports']);
+Route::post('reports', [ApiController::class, 'storeReport']);
+Route::get('reports/{report_id}', [ApiController::class, 'getReport']);
+Route::put('reports/{report_id}', [ApiController::class, 'updateReport']);
+Route::delete('reports/{report_id}', [ApiController::class, 'deleteReport']);
