@@ -27,7 +27,15 @@ Route::get('customers', function () {
     $customers = Customer::query()->select(['id', 'name'])->get();
     return response()->json($customers);
 });
-Route::post('customers', function () {
+
+/**
+ * (仮) リクエストされたデータでcustomers にレコードを追加する
+ * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
+ */
+Route::post('customers', function (Request $request) {
+    $customer = new Customer();
+    $customer->name = $request->json('name');
+    $customer->save();
     return;
 });
 Route::get('customers/{customer_id}', function () {
