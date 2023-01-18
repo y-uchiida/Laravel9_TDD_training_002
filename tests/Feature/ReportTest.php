@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,6 +10,17 @@ use Tests\TestCase;
 
 class ReportTest extends TestCase
 {
+    // テスト実行時にデータベースの初期化を行う
+    use RefreshDatabase;
+
+    // テスト実行時のセットアップを行う
+    // 処理内容を記述する前に、必ず親クラスのsetUp() を呼び出しておくこと
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
+    }
+
     /** @test */
     public function api_customersにGETメソッドでアクセスできる()
     {
@@ -16,6 +29,14 @@ class ReportTest extends TestCase
 
         // 検証
         $response->assertOk();
+    }
+
+    /** @test */
+    public function api_customersへGETリクエストするとJSONが返却される()
+    {
+        $response = $this->get('api/customers');
+        // assertJson の引数を空にしておけば、Jsonかどうかだけ判定できる
+        $response->assertJson([]);
     }
 
     /** @test */
