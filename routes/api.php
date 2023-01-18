@@ -2,6 +2,7 @@
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +34,12 @@ Route::get('customers', function () {
  * ある程度挙動が完成したタイミングでルーティングから処理を切り出す
  */
 Route::post('customers', function (Request $request) {
+    $inputName = $request->json('name');
+    if (!$inputName) {
+        return response()->make('', Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
     $customer = new Customer();
-    $customer->name = $request->json('name');
+    $customer->name = $inputName;
     $customer->save();
     return;
 });
