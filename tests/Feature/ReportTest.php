@@ -91,6 +91,20 @@ class ReportTest extends TestCase
     }
 
     /** @test */
+    public function api_customersへのPOSTリクエストに対するエラーレスポンスの確認()
+    {
+        $response = $this->postJson('api/customers', ['name' => '']);
+        $error_response = [
+            "errors" => [
+                "name" => [
+                    0 => "nameは必ず指定してください。",
+                ],
+            ],
+        ];
+        $response->assertJsonFragment($error_response);
+    }
+
+    /** @test */
     public function api_customers_customer_idにGETメソッドでアクセスできる()
     {
         $response = $this->get('api/customers/1');
