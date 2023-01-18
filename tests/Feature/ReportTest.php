@@ -1,13 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ReportTest extends TestCase
 {
+    // テスト実行時にデータベースの初期化を行う
+    use RefreshDatabase;
+
+    // テスト実行時のセットアップを行う
+    // 処理内容を記述する前に、必ず親クラスのsetUp() を呼び出しておくこと
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
+    }
+
     /** @test */
     public function api_customersにGETメソッドでアクセスできる()
     {
@@ -16,6 +30,32 @@ class ReportTest extends TestCase
 
         // 検証
         $response->assertOk();
+    }
+
+    /** @test */
+    public function api_customersへGETリクエストするとJSONが返却される()
+    {
+        $response = $this->get('api/customers');
+        // assertJson の引数を空にしておけば、Jsonかどうかだけ判定できる
+        $response->assertJson([]);
+    }
+
+    /** @test */
+    public function api_customersが返すjsonが仕様通りのプロパティを持っている()
+    {
+        $response = $this->get('api/customers');
+        $expectedKeys = ['id', 'name'];
+        $customer = $response->json()[0];
+        $this->assertSame($expectedKeys, array_keys($customer));
+    }
+
+    /** @test */
+    public function api_customersが返すjsonに含まれるデータの件数がデータベースに登録されているデータの件数と一致する()
+    {
+        $record_count = Customer::count();
+        $response = $this->get('api/customers');
+        $response_count = count($response->json());
+        $this->assertSame($record_count, $response_count);
     }
 
     /** @test */
