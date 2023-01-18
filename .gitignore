@@ -16,3 +16,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Larvel IDE Helper
+_ide_helper_models.php
